@@ -1,11 +1,13 @@
 package main
 
 import (
+	"encoding/gob"
 	"flag"
 	"log"
 	"net/http"
 
 	"github.com/alexedwards/scs/v2"
+	"webapp.udemy.go/pkg/data"
 	"webapp.udemy.go/pkg/db"
 )
 
@@ -16,6 +18,7 @@ type application struct {
 }
 
 func main() {
+	gob.Register(data.User{})
 	// Set up an app config
 	app := application{}
 
