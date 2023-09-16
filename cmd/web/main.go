@@ -1,17 +1,17 @@
 package main
 
 import (
-	"database/sql"
 	"flag"
 	"log"
 	"net/http"
 
 	"github.com/alexedwards/scs/v2"
+	"webapp.udemy.go/pkg/db"
 )
 
 type application struct {
 	DSN     string
-	DB      *sql.DB
+	DB      db.PostgresConn
 	Session *scs.SessionManager
 }
 
@@ -26,8 +26,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer conn.Close()
 
-	app.DB = conn
+	app.DB = db.PostgresConn{DB: conn}
 
 	// Get a session manager
 	app.Session = getSession()
